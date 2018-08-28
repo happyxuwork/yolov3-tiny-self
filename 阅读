@@ -1,0 +1,78 @@
+1---Scale-Transferrable Detection Network（STDN）算法笔记:https://blog.csdn.net/u014380165/article/details/80602130
+
+2---CVPR2018论文集：http://openaccess.thecvf.com/CVPR2018.py
+
+3---GAN标记Tagging like humans: Diverse and distinct image annotation
+
+4---目标检测CVPR2018:https://blog.csdn.net/u014380165/article/details/80784147
+
+5---自主车辆的计算机视觉：问题、数据集和最先进技术  https://www.auto-testing.net/news/show-98202.html
+
+6--KITTI以及bdd100k,UA-DETRAC
+
+7--python模块导入及属性：import  https://blog.csdn.net/pipisorry/article/details/43313197
+
+8--伯克利bdd100k数据集介绍  https://www.leiphone.com/news/201806/H6uW4rfADnCtSk26.html
+
+9--glob的排序规则https://cloud.tencent.com/developer/ask/48758/answer/78385
+
+10--An empirical study on evaluation metrics of generative adversarial networks
+
+11--FPN(featrue pyramid networks)https://blog.csdn.net/u014380165/article/details/72890275/
+
+12--DetNet(A backbone network for object Detection)https://blog.csdn.net/lanran2/article/details/80644272
+
+13--Open Images V4它包含在 190 万张图片上针对 600 个类别的 1540 万个边框盒，这也是现有最大的具有对象位置注释的数据集
+
+14--google博客https://ai.googleblog.com/
+	https://blog.csdn.net/wulala789/article/details/80646618
+	https://blog.csdn.net/wulala789/article/details/80671952
+
+15--自动驾驶综述：Computer Vision for Autonomous Vehicles: Problems, Datasets and State-of-the-Art
+
+
+16---改进正负样本不均衡问题：Focal loss==RetinaNet
+
+17--小物体检测：FPN=Feature Pyramid Networks
+
+18--修改网络以提升效果
+	DetNet
+	
+	
+	
+	
+19--[斯坦福CS231n课程整理] Convolutional Neural Networks for Visual Recognition（附翻译，作业）https://www.jianshu.com/p/182baeb82c71
+
+
+
+
+
+20--Fast RCNN算法详解:https://blog.csdn.net/u014380165/article/details/72851319
+
+21--Faster RCNN算法详解https://blog.csdn.net/hunterlew/article/details/71075925
+					   http://www.360doc.com/content/17/0809/10/10408243_677742029.shtml
+
+
+
+22--A-Fast-RCNN: Hard Positive Generation via Adversary for Object Detection--CVPR2017
+
+23--Glow https://blog.openai.com/glow/
+
+24--SSD: Single Shot MultiBox Detector:https://blog.csdn.net/qq_34784753/article/details/78889206
+	翻译：http://lib.csdn.net/article/deeplearning/53059
+	https://blog.csdn.net/smf0504/article/details/52745070
+
+25--flask框架整合：https://www.imooc.com/video/17185
+
+26-- IJCV，CVPR,ECCV，ICCV
+
+27--PotPlayer 
+
+28--good paper :https://www.jianshu.com/p/78f614799cf2
+
+
+
+
+
+
+
