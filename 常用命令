@@ -1,0 +1,269 @@
+anaconda
+windows中：
+1、列出所有环境：conda env list
+2、激活环境：activate 环境名称
+3、删除环境：conda env remove -n 环境名称
+
+
+
+python中安装tar.gz文件
+安装此类文件windows和linux下都适用，一般是先解压，然后进入目录之后，有setup.py文件，
+通过命令 python setup.py install安装
+
+python中安转.whl文件
+直接切换到安转目录下，利用pip install xxx.whl
+
+
+
+
+docker 使用
+1、执行docker images，列出可用的镜像文件
+2、docker run -it --name ubuntu_xq --net=host --hostname xq -v /AII/adc-01/xq/:/mnt/xq caffe-tensorflow-darknet-keras-ubuntu16.04:version1 bash
+（其中，ubuntu_xq表示容器名称，xq表示容器主机名称，/AII/adc-01/xq/:/mnt/xq表示把主机目录/AII/adc-01/xq挂载到容器的/mnt/xq目录）
+3、启动容器后，按Ctrl+P+Q可以退出，此时容器依然在后台运行。执行docker container ls列出正在运行的容器：
+   列出所有的容器：docker container list -a;
+   使用filter列出特定的容器docker container list -a -f name=dis_*
+4、执行docker exec –it c63899fe843b bash进入一个正在运行的容器，其中c63899fe843b表示容器ID，以实际情况修改。
+    如果容器被挂起（即没有处于运行阶段）--使用docker start 容器id（或容器name）将容器    启动
+5、执行docker rm -f c63899fe843b删除指定容器，其中c63899fe843b表示容器ID
+6、执行source ~/tensorflow/bin/activate激活python虚拟环境，执行deactivate退出。
+7、docker: Error response from daemon: create nvidia_driver_384.59: found reference to volume 'nvidia_driver_384.59' in driver 'nvidia-docker', but got an error while checking the driver: error while checking if volume "nvidia_driver_384.59" exists in driver "nvidia-docker": Post http://%2Fvar%2Flib%2Fnvidia-docker%2Fnvidia-docker.sock/VolumeDriver.Get: dial unix /var/lib/nvidia-docker/nvidia-docker.sock: connect: no such file or directory: volume name must be unique.
+   =错误的原因是关闭了nvidia服务  启动就好  登入root用户，启动nvidia服务   service nvidia-docker restart
+
+
+
+
+
+=======================================
+docker端口映射：https://blog.csdn.net/u011291159/article/details/66970202
+======================================
+使用docker进行端口映射时：使用命令：
+nvidia-docker run -it --name dis_ps --hostname ps -p 22221:22221 -v /AII/adc-01/xq/:/mnt/xq ai-ubuntu16.04:v1 bash
+
+若出现如下错误：
+/usr/bin/docker-current: Error response from daemon: create nvidia_driver_390.30: create nvidia_driver_390.30: Error looking up volume plugin nvidia-docker: legacy plugin: plugin not found.
+问题所在：没有启动nvidia-docker相关服务：
+解决方案：（执行如下指令）
+1、systemctl status nvidia-docker
+2、systemctl start nvidia-docker 
+3、systemctl status nvidia-docker
+如上即可成功映射宿机端口和主机端口。
+利用docker port 容器ID或容器name:显示
+22221/tcp -> 0.0.0.0:22221   表示映射成功
+
+======================================
+======================================
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+tensorflow进行分布式搭建
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+===使用网桥模式：直接一个容器里跑多个docker===使用ip a 查看ip,不用进行端口映射
+1、创建一个容器nvidia-docker run -it --name dis_ps_worker --hostname=ps_worker -v /AII/adkkk/xq/:/mnt/xq/ ai-ubuntu16.04:v1 bash
+2、使用这个容器创建多个docker,==docker exec -it dis_ps_worker
+3、激活tensorflow环境
+4、运行ps=======python xx.py --job_name=ps --task_index=0
+5、运行worker===python xx.py --job_name=worker --task_index=0
+5、运行worker===python xx.py --job_name=worker --task_index=1
+
+
+=================================================================
+===使用host模式:使用多个容器，跑多个docker==无需进行端口映射=====共用宿主机地址
+1、创建ps容器nvidia-docker run -it --name dis_ps --hostname=ps --net=host -v /AII/adkkk/xq/:/mnt/xq/ ai-ubuntu16.04:v1 bash
+2、创建worker1容器nvidia-docker run -it --name dis_worker1 --hostname=worker1 --net=host -v /AII/adkkk/xq/:/mnt/xq/ ai-ubuntu16.04:v1 bash
+3、创建worker2容器nvidia-docker run -it --name dis_worker2 --hostname=worker2 --net=host -v /AII/adkkk/xq/:/mnt/xq/ ai-ubuntu16.04:v1 bash
+4、注意将ps、worker1、worker2的地址设为localhost，端口任意。
+++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+docker中调出IDEA环境
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+docker run -itd -v /etc/localtime:/etc/localtime:ro --net=host -e DISPLAY=:28.0 -v $HOME/slides:/root/slides -v $HOME/.Xauthority:/root/.Xauthority -v /home/x84102454/:/mnt/xq/ --name tiny_xq_pycharm ai-ubuntu16.04:v1
++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+
+
+
+
+
+用pip install 安装第三方包时，需要在/root/.pip/pip.conf中文件中替换成如下：
+[global]
+# index-url=http://pypi.douban.com/simple
+# trusted-host=pypi.douban.com
+index-url=https://pypi.python.org/simple
+trusted-host=pypi.python.org pypi.org files.pythonhosted.org
+
+
+使用pip list进行安装包的查看
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+linux常用命令：
+1、使用mv 将文件移动或改名
+2、使用rm -r 文件名  删除文件
+3、使用rm -rf 文件夹  删除文件夹
+4、查看系统资源情况--gnome-system-monitor
+5、解压：unzip darkflow-master -x joe
+6、解压：unrar x xx.rar  x参数是解压到一个文件夹里
+7、解压：unrar e xx.rar  e参数是把所有文件解药到当前目录下
+8、将某个文件夹地下的文件复制到另一个文件夹底下：cp -R ./bdd100k_images/bdd100k/images/100k/train/. ./Original/
+9、检查linux服务器的文件系统的磁盘空间占用情况 df -h
+10、修改某个文件夹的权限  sudo chmod -R 777 /home/ai_traffic/xq/
+
+
+
+=========================================================================================
+=======查看硬盘的剩余空间========
+=========================================================================================
+Df命令是linux系统以磁盘分区为单位查看文件系统，可以加上参数查看磁盘剩余空间信息，命令格式：
+
+df -hl
+
+显示格式为：　
+
+文件系统              容量 已用 可用 已用% 挂载点　
+
+Filesystem            Size Used Avail Use% Mounted on
+
+/dev/hda2              45G   19G   24G 44% /
+
+/dev/hda1             494M   19M 450M   4% /boot
+
+/dev/hda6             4.9G 2.2G 2.5G 47% /home
+
+/dev/hda5             9.7G 2.9G 6.4G 31% /opt
+
+none                 1009M     0 1009M   0% /dev/shm
+
+/dev/hda3             9.7G 7.2G 2.1G 78% /usr/local
+
+/dev/hdb2              75G   75G     0 100% /
+
+/dev/hdb2              75G   75G     0 100% /
+
+以上面的输出为例，表示的意思为：
+
+HD硬盘接口的第二个硬盘（b），第二个分区（2），容量是75G，用了75G，可用是0，因此利用率是100%， 被挂载到根分区目录上（/）。
+
+下面是相关命令的解释：
+
+df -hl 查看磁盘剩余空间
+
+df -h 查看每个根路径的分区大小
+
+du -sh [目录名] 返回该目录的大小  du -sh *
+
+du -sm [文件夹] 返回该文件夹总M数
+
+更多功能可以输入一下命令查看：
+
+df --help
+
+du --help
+
+
+
+查看硬盘的分区 #sudo fdisk -l
+
+查看IDE硬盘信息 #sudo hdparm -i /dev/hda
+
+查看STAT硬盘信息 #sudo hdparm -I /dev/sda 或 #sudo apt-get install blktool #sudo blktool /dev/sda id
+
+查看硬盘剩余空间 #df -h #df -H
+
+查看目录占用空间 #du -hs 目录名
+
+优盘没法卸载 #sync fuser -km /media/usbdisk
+
+
+
+查看某个文件夹地下文件的个数 http://blog.sina.com.cn/s/blog_464f6dba01012vwv.html
+ls -l |grep "^-"|wc -l
+
+
+
+
+
+
+
+
+
+
+
+=========================================================================================
+=========================================================================================
+
+
+
+
+=========================================================================================
+======================ps命令的的使用======================
+=========================================================================================
+三种风格的参数，有一些相似的，但也有些看似相同却结果不同的。例如ps aux与ps -aux 的含义是不同的。 
+ps aux 表示 打印基于用户的格式显示的所有进程 
+ps -aux 表示用户x的所有进程，如用户x不存在，则给出警告，然后打印内容和ps aux相同
+
+
+ps aux|grep python
+
+
+查看最占CPU前10的进程
+ps aux --sort -%cpu|head -n 10
+
+查看topN最占内存的进程
+ps -A -o pid,%mem,cmd --sort -%mem|head -n 10
+
+查看topN虚拟内存使用最多的进程
+ps -A -o pid,vsz,cmd --sort -vsz|head -n 10
+=========================================================================================
+=========================================================================================
+
+
+
+
+
+
+
+
+
+
+
+tensorflow问题
+tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+
+百思不得其解，查了一整天也没结果，最后试探性的逛了逛论坛Stack overflow，发现了一篇帖子，完美解决问题，链接如下：
+
+https://stackoverflow.com/questions/45515142/tensorflow-gpu-is-not-working-with-blas-gemm-launch-failed
+
+具体做法：
+
+sudo rm -rf ~/.nv/
+
+
+
